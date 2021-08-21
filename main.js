@@ -20,7 +20,9 @@ function submitIssue(e) {
   fetchIssues();
   e.preventDefault();
   totalIssues();
+  openIssues();
 }
+
 const setStatusClosed = (event, id) => {
   const issues = JSON.parse(localStorage.getItem('issues'));
   const currentIssue = issues.find(issue => issue.id == id);
@@ -28,6 +30,7 @@ const setStatusClosed = (event, id) => {
   localStorage.setItem('issues', JSON.stringify(issues));
   fetchIssues();
   document.getElementById(`issue-title-${id}`).style.textDecoration = "line-through"
+  openIssues();
 }
 
 const deleteIssue = (event, id) => {
@@ -36,6 +39,7 @@ const deleteIssue = (event, id) => {
   localStorage.setItem('issues', JSON.stringify(remainingIssues));
   document.getElementById(`issue-card-${id}`).style.display = 'none';
   totalIssues();
+  openIssues();
 }
 
 function totalIssues() {
@@ -51,6 +55,18 @@ function totalIssues() {
   document.getElementById("total-issues").innerText = `/${issuesNum}`
 };
 totalIssues();
+
+const openIssues = () => {
+  const issues = JSON.parse(localStorage.getItem('issues'));
+  openIssuesNum = 0;
+  for (var i = 0; i < issues.length; i++) {
+    if (issues[i].status === 'Open'){
+      openIssuesNum++;
+    }
+  }
+  document.getElementById('open-issues').innerText = openIssuesNum;
+}
+openIssues();
 
 const fetchIssues = () => {
   const issues = JSON.parse(localStorage.getItem('issues'));
