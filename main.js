@@ -23,7 +23,7 @@ function submitIssue(e) {
   openIssues();
 }
 
-const setStatusClosed = (event, id) => {
+const setStatusClosed = id => {
   const issues = JSON.parse(localStorage.getItem('issues'));
   const currentIssue = issues.find(issue => issue.id == id);
   currentIssue.status = 'Closed';
@@ -33,7 +33,7 @@ const setStatusClosed = (event, id) => {
   openIssues();
 }
 
-const deleteIssue = (event, id) => {
+const deleteIssue = id=> {
   const issues = JSON.parse(localStorage.getItem('issues'));
   const remainingIssues = issues.filter( issue => issue.id != id );
   localStorage.setItem('issues', JSON.stringify(remainingIssues));
@@ -82,8 +82,8 @@ const fetchIssues = () => {
                               <h3 id="issue-title-${id}"> ${description} </h3>
                               <p><span class="glyphicon glyphicon-time"></span> ${severity}</p>
                               <p><span class="glyphicon glyphicon-user"></span> ${assignedTo}</p>
-                              <a href="#" onclick="setStatusClosed(event, ${id})" class="btn btn-warning">Close</a>
-                              <a href="#" onclick="deleteIssue(event, ${id})" class="btn btn-danger">Delete</a>
+                              <a href="#" onclick="setStatusClosed(${id})" class="btn btn-warning">Close</a>
+                              <a href="#" onclick="deleteIssue(${id})" class="btn btn-danger">Delete</a>
                               </div>`;
   }
 }
